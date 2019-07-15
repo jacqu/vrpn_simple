@@ -131,11 +131,11 @@ int gethostname (char *, int);
 //
 // o The minor version number must follow the last period ('.') and be the
 // only significant thing following the last period in the vrpn_MAGIC string.
-// 
+//
 // o Minor versions should interoperate.  So, when establishing a connection,
 // vrpn_MAGIC is checked through the last period.  If everything up to, and
 // including, the last period matches, a connection will be made.
-// 
+//
 // o If everything up to the last period matches, then a second check is
 // preformed on everything after the last period (the minor version number).
 // If the minor version numbers differ, a connection is still made, but a
@@ -147,7 +147,7 @@ int gethostname (char *, int);
 // check_vrpn_cookie, found in this file.  check_vrpn_cookie returns a
 // different value for each of these three cases.
 //                                                    -[juliano 2000/08]
-// 
+//
 // [juliano 2000/08] Suggestion:
 //
 // We have the situation today that vrpn5 can read stream files that were
@@ -156,11 +156,11 @@ int gethostname (char *, int);
 // because vrpn_check_cookie doesn't know if it's being called for a network
 // or a file connection.  The purpose of this comment is to suggest a
 // solution.
-// 
+//
 // Our temporary solution is to change the cookie, rebulid the library, and
 // relink into our app.  Then, our app can read stream files produced by
 // vrpn4.x.
-// 
+//
 // Vrpn currently knows that live network connections between vrpn-4.x and
 // vrpn-5.x apps are not possible.  But, ideally, it should also know that
 // it's ok for a vrpn-5.x app to read a vrpn-4.x streamfile.  Unfortunately,
@@ -180,7 +180,7 @@ int gethostname (char *, int);
 // and print an appropriate diagnostic.  Similar solution exists if release
 // n+1 is file-compatible but later found to be network-incompatible with
 // release n.
-// 
+//
 // Again, in our current framework, we cannot distinguish between
 // file-compatible and network-compatible.  In the future, we may also have
 // shared-memory-access-compatible as well as other types of connection.  The
@@ -389,7 +389,7 @@ vrpn_int32 vrpn_TranslationTable::addRemoteEntry (cName name,
   useEntry = remote_id;
 
   if (useEntry >= vrpn_CONNECTION_MAX_XLATION_TABLE_SIZE) {
-    fprintf(stderr, "vrpn_TranslationTable::addRemoteEntry:  " 
+    fprintf(stderr, "vrpn_TranslationTable::addRemoteEntry:  "
                     "Too many entries in table (%d).\n", d_numEntries);
     return -1;
   }
@@ -616,13 +616,13 @@ void vrpn_TranslationTable::clear (void) {
 //  if(!d_wroteMagicCookie) {
 //    // Write out the log header (magic cookie)
 //    // TCH 20 May 1999
-//    
+//
 //    // There's at least one hack here:
 //    //   What logging mode should a client that plays back the log at a
 //    // later time be forced into?  I believe NONE, but there might be
 //    // arguments the other way? So, you may want to adjust the cookie
 //    // to make the log mode 0.
-//    
+//
 //    retval = fwrite(d_magicCookie, 1, vrpn_cookie_size(), d_file);
 //    if (retval != vrpn_cookie_size()) {
 //      fprintf(stderr, "vrpn_Log::saveLogSoFar:  "
@@ -660,7 +660,7 @@ void vrpn_TranslationTable::clear (void) {
 //    memcpy(&(values[4]), &lp->data.payload_len, sizeof(vrpn_int32));
 //    memcpy(&(values[5]), &zero, sizeof(vrpn_int32));   // Bogus pointer.
 //    retval = fwrite(values, sizeof(vrpn_int32), 6, d_file);
-//    
+//
 //    if (retval != 6) {
 //      fprintf(stderr, "vrpn_Log::saveLogSoFar:  "
 //                      "Couldn't write log file (got %d, expected %lud).\n",
@@ -1038,7 +1038,7 @@ vrpn_TypeDispatcher::~vrpn_TypeDispatcher (void) {
   }
 
   pVMCB = d_genericCallbacks;
-   
+
   while (pVMCB) {
     pVMCB_Del = pVMCB;
     pVMCB = pVMCB_Del->next;
@@ -1218,7 +1218,7 @@ int vrpn_TypeDispatcher::addHandler (vrpn_int32 type,
   new_entry->sender = sender;
 
 #ifdef  VERBOSE
-  printf("Adding user handler for type %ld, sender %ld\n",type,sender);
+  printf("Adding user handler for type %d, sender %d\n",type,sender);
 #endif
 
   // TCH June 2000 - rewrote to insert at end of list instead of beginning,
@@ -1526,7 +1526,7 @@ vrpn_ConnectionManager::vrpn_ConnectionManager (void) :
 static int	vrpn_getmyIP (char * myIPchar, unsigned maxlen,
                               const char * NIC_IP = NULL,
                               SOCKET incoming_socket = INVALID_SOCKET)
-{	
+{
   char myname [100];		// Host name of this host
   struct hostent * host;        // Encoded host IP address, etc.
   char myIPstring [100];	// Hold "152.2.130.90" or whatever
@@ -1583,7 +1583,7 @@ static int	vrpn_getmyIP (char * myIPchar, unsigned maxlen,
   }
 
   // Find out what my name is
-  // gethostname() is guaranteed to produce something gethostbyname() can parse. 
+  // gethostname() is guaranteed to produce something gethostbyname() can parse.
   if (gethostname(myname, sizeof(myname))) {
     fprintf(stderr, "vrpn_getmyIP: Error finding local hostname\n");
     return -1;
@@ -1629,7 +1629,7 @@ static int	vrpn_getmyIP (char * myIPchar, unsigned maxlen,
  * in its function, and allows this code to perform properly on pxpl5, which
  * sends USER1 interrupts while rendering an image.
  */
-int vrpn_noint_select(int width, fd_set *readfds, fd_set *writefds, 
+int vrpn_noint_select(int width, fd_set *readfds, fd_set *writefds,
 		     fd_set *exceptfds, struct timeval * timeout)
 {
 	fd_set	tmpread, tmpwrite, tmpexcept;
@@ -1644,7 +1644,7 @@ int vrpn_noint_select(int width, fd_set *readfds, fd_set *writefds,
 	 * we will copy the timeout to timeout2, which will be used
 	 * to keep track.  Also, the stop time is calculated so that
          * we can know when it is time to bail. */
-	if ( (timeout != NULL) && 
+	if ( (timeout != NULL) &&
 	     ((timeout->tv_sec != 0) || (timeout->tv_usec != 0)) ) {
 		timeout2 = *timeout;
 		timeout2ptr = &timeout2;
@@ -1803,15 +1803,15 @@ int vrpn_noint_block_write(SOCKET outsock, char *buffer, int length)
 			return -1;
         }
 
-		sofar += nwritten;		
+		sofar += nwritten;
 	} while ( sofar < length );
-	
+
 	return(sofar);			/* All bytes written */
 }
 
 int vrpn_noint_block_read(SOCKET insock, char *buffer, int length)
 {
-    int nread, sofar = 0;  
+    int nread, sofar = 0;
 
   // TCH 4 Jan 2000 - hackish - Cygwin will block forever on a 0-length
   // read(), and from the man pages this is close enough to in-spec that
@@ -1831,10 +1831,10 @@ int vrpn_noint_block_read(SOCKET insock, char *buffer, int length)
 		if (nread == 0) {   /* socket closed */
 			return 0;
 		}
-        
-        sofar += nread;        
+
+        sofar += nread;
     } while (sofar < length);
-	    
+
     return(sofar);			/* All bytes read */
 }
 
@@ -1855,10 +1855,10 @@ int vrpn_noint_block_read(SOCKET insock, char *buffer, int length)
  */
 
 #ifdef VRPN_USE_WINSOCK_SOCKETS
-int vrpn_noint_block_read_timeout(SOCKET infile, char buffer[], 
+int vrpn_noint_block_read_timeout(SOCKET infile, char buffer[],
 				 int length, struct timeval *timeout)
 #else
-int vrpn_noint_block_read_timeout(int infile, char buffer[], 
+int vrpn_noint_block_read_timeout(int infile, char buffer[],
 				 int length, struct timeval *timeout)
 #endif
 {
@@ -1881,7 +1881,7 @@ int vrpn_noint_block_read_timeout(int infile, char buffer[],
 	 * we will copy the timeout to timeout2, which will be used
 	 * to keep track.  Also, the current time is found so that we
 	 * can track elapsed time. */
-	if ( (timeout != NULL) && 
+	if ( (timeout != NULL) &&
 	     ((timeout->tv_sec != 0) || (timeout->tv_usec != 0)) ) {
 		timeout2 = *timeout;
 		timeout2ptr = &timeout2;
@@ -1892,7 +1892,7 @@ int vrpn_noint_block_read_timeout(int infile, char buffer[],
 	}
 
         sofar = 0;
-        do {	
+        do {
 		int	sel_ret;
 		fd_set	readfds, exceptfds;
 
@@ -1992,8 +1992,8 @@ static SOCKET open_socket (int type,
   vrpn_int32 optval = 1;
   vrpn_int32 sockoptsuccess = setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof optval);
   fprintf(stderr, "setsockopt returned %i, optval: %i\n", sockoptsuccess, optval);
-#endif 
-  
+#endif
+
   namelen = sizeof(name);
 
   // bind to local address
@@ -2019,7 +2019,7 @@ static SOCKET open_socket (int type,
   }
 
 #ifdef VERBOSE3
-  //NIC will be 0.0.0.0 if we use INADDR_ANY 
+  //NIC will be 0.0.0.0 if we use INADDR_ANY
 fprintf(stderr, "open_socket:  request port %d, using NIC %d %d %d %d.\n",
 portno ? *portno : 0 , ntohl(name.sin_addr.s_addr) >> 24,
 (ntohl(name.sin_addr.s_addr) >> 16) & 0xff,
@@ -2046,7 +2046,7 @@ ntohl(name.sin_addr.s_addr) & 0xff);
   }
 
 #ifdef VERBOSE3
-//NIC will be 0.0.0.0 if we use INADDR_ANY 
+//NIC will be 0.0.0.0 if we use INADDR_ANY
 fprintf(stderr, "open_socket:  got port %d, using NIC %d %d %d %d.\n",
 portno ? *portno : ntohs(name.sin_port), ntohl(name.sin_addr.s_addr) >> 24,
 (ntohl(name.sin_addr.s_addr) >> 16) & 0xff,
@@ -2098,8 +2098,8 @@ static SOCKET vrpn_connect_udp_port
   udp_name.sin_family = AF_INET;
 
 // gethostbyname() fails on SOME Windows NT boxes, but not all,
-// if given an IP octet string rather than a true name. 
-// MS Documentation says it will always fail and inet_addr should 
+// if given an IP octet string rather than a true name.
+// MS Documentation says it will always fail and inet_addr should
 // be called first. Avoids a 30+ second wait for
 // gethostbyname() to fail.
 
@@ -2148,7 +2148,7 @@ static SOCKET vrpn_connect_udp_port
   }
 
 #ifdef VERBOSE3
-  // NOTE NIC will be 0.0.0.0 if we listen on all NICs. 
+  // NOTE NIC will be 0.0.0.0 if we listen on all NICs.
 fprintf(stderr, "vrpn_connect_udp_port:  got port %d, using NIC %d %d %d %d.\n",
 ntohs(udp_name.sin_port), ntohl(udp_name.sin_addr.s_addr) >> 24,
 (ntohl(udp_name.sin_addr.s_addr) >> 16) & 0xff,
@@ -2316,7 +2316,7 @@ int vrpn_poll_for_accept(SOCKET listen_sock, SOCKET *accept_sock, double timeout
 			vrpn_closeSocket(*accept_sock);
 			return(-1);
 		}
-	
+
 		if (setsockopt(*accept_sock, p_entry->p_proto,
 		TCP_NODELAY, SOCK_CAST &nonzero, sizeof(nonzero))==-1) {
 			perror("vrpn_poll_for_accept: setsockopt() failed");
@@ -2332,7 +2332,7 @@ int vrpn_poll_for_accept(SOCKET listen_sock, SOCKET *accept_sock, double timeout
 }
 
 // This is like sdi_start_server except that the convention for
-// passing information on the client machine to the server program is 
+// passing information on the client machine to the server program is
 // different; everything else has been left the same
 /**
  *      This routine will start up a given server on a given machine.  The
@@ -2431,12 +2431,8 @@ int vrpn_start_server(const char * machine, char * server_name, char * args,
                 for (waitloop = 0; waitloop < (SERVCOUNT); waitloop++) {
 		    int ret;
                     pid_t deadkid;
-#if defined(sparc) || defined(FreeBSD) || defined(_AIX) || defined(__ANDROID__)
-                    int status;  // doesn't exist on sparc_solaris or FreeBSD
-#else
-                    union wait status;
-#endif
-		    
+                    int status;
+
                     /* Check to see if they called back yet. */
 		    ret = vrpn_poll_for_accept(server_sock, &child_socket, SERVWAIT);
 		    if (ret == -1) {
@@ -2561,8 +2557,8 @@ int check_vrpn_file_cookie (const char * buffer)
   bp = strrchr(buffer, '.');
   int majorComparison = strncmp(buffer, vrpn_MAGIC,
       (bp == NULL ? vrpn_MAGICLEN : bp + 1 - buffer));
-  if (majorComparison > 0 || 
-        strncmp(buffer, vrpn_FILE_MAGIC, 
+  if (majorComparison > 0 ||
+        strncmp(buffer, vrpn_FILE_MAGIC,
 	(bp == NULL ? vrpn_MAGICLEN : bp + 1 - buffer)) < 0) {
     fprintf(stderr, "check_vrpn_file_cookie:  "
             "bad cookie (wanted >='%s' and <='%s', "
@@ -2759,14 +2755,14 @@ int vrpn_Endpoint_IP::mainloop (timeval * timeout) {
   switch (status) {
 
     case CONNECTED:
-    
+
       // Send all pending reports on the way out
       send_pending_reports();
-  
+
       // check for pending incoming tcp or udp reports
       // we do this so that we can trigger out of the timeout
       // on either type of message without waiting on the other
-    
+
       FD_ZERO(&readfds);              /* Clear the descriptor sets */
       FD_ZERO(&exceptfds);
 
@@ -2782,7 +2778,7 @@ int vrpn_Endpoint_IP::mainloop (timeval * timeout) {
       }
 
       // Select to see if ready to hear from other side, or exception
-    
+
       if (vrpn_noint_select(fd_max+1, &readfds, NULL, &exceptfds, timeout) == -1) {
           fprintf(stderr, "vrpn_Endpoint::mainloop: select failed.\n");
 #ifndef _WIN32_WCE
@@ -2794,7 +2790,7 @@ int vrpn_Endpoint_IP::mainloop (timeval * timeout) {
 
       // See if exceptional condition on either socket
       if (FD_ISSET(d_tcpSocket, &exceptfds) ||
-            ((d_udpInboundSocket != -1) && 
+            ((d_udpInboundSocket != -1) &&
              FD_ISSET(d_udpInboundSocket, &exceptfds))) {
         fprintf(stderr, "vrpn_Endpoint::mainloop: Exception on socket\n");
         status = BROKEN;
@@ -2802,7 +2798,7 @@ int vrpn_Endpoint_IP::mainloop (timeval * timeout) {
       }
 
     // Read incoming messages from the UDP channel
-    if ((d_udpInboundSocket != -1) && 
+    if ((d_udpInboundSocket != -1) &&
         FD_ISSET(d_udpInboundSocket,&readfds)) {
       udp_messages_read = handle_udp_messages(NULL);
       if (udp_messages_read == -1) {
@@ -3226,7 +3222,7 @@ int vrpn_Endpoint::pack_log_description (void) {
   const char *outName = "";
   if (d_remoteInLogName) { inName = d_remoteInLogName; }
   if (d_remoteOutLogName) { outName = d_remoteOutLogName; }
-  
+
   // Include the NULL termination for the strings in the length of the buffer.
   vrpn_int32 bufsize = 2*sizeof(vrpn_int32) + strlen(inName) + 1 + strlen(outName) + 1;
   char *buf = new char[bufsize];
@@ -3469,8 +3465,8 @@ int vrpn_Endpoint_IP::connect_tcp_to (const char * addr, int port) {
   client.sin_family = AF_INET;
 
 // gethostbyname() fails on SOME Windows NT boxes, but not all,
-// if given an IP octet string rather than a true name. 
-// MS Documentation says it will always fail and inet_addr should 
+// if given an IP octet string rather than a true name.
+// MS Documentation says it will always fail and inet_addr should
 // be called first. Avoids a 30+ second wait for
 // gethostbyname() to fail.
 
@@ -3480,7 +3476,7 @@ int vrpn_Endpoint_IP::connect_tcp_to (const char * addr, int port) {
       if (host) {
 
 #ifdef CRAY
-          { 
+          {
   		int i;
   		u_long foo_mark = 0;
   		for  (i = 0; i < 4; i++) {
@@ -4031,7 +4027,7 @@ int vrpn_Endpoint_IP::getOneUDPMessage (char * inbuf_ptr, int inbuf_len) {
 
 
 #ifdef VERBOSE
-  fprintf(stderr, "Message type %ld (local type %ld), sender %ld received\n",
+  fprintf(stderr, "Message type %d (local type %d), sender %d received\n",
           type,local_type_id(type),sender);
   fprintf(stderr, "Message length is %d (buffer length %d).\n", len, inbuf_len);
 #endif
@@ -4268,7 +4264,7 @@ int vrpn_Endpoint::handle_type_message(void *userdata,
 
 
 /*
-void vrpn_Endpoint::setLogNames (const char * inName, const char * outName) 
+void vrpn_Endpoint::setLogNames (const char * inName, const char * outName)
 {
   if( inName != NULL ) { d_inLog->setName(inName); }
   if( outName != NULL ) { d_outLog->setName(outName); }
@@ -4327,7 +4323,7 @@ int vrpn_Endpoint::handle_sender_message(void *userdata,
 	  }
 #endif
   }
-  if (endpoint->newRemoteSender(sender_name, p.sender, local_id) == -1) 
+  if (endpoint->newRemoteSender(sender_name, p.sender, local_id) == -1)
   {
     fprintf(stderr, "vrpn: Failed to add remote sender %s\n", sender_name);
     return -1;
@@ -4489,7 +4485,7 @@ int vrpn_Connection::handle_log_message (void * userdata,
   // must deal properly with only opening one log file
   //  the log message contains "" (an empty string) if
   //  there is no desire to log that file.
- /* endpoint->setLogNames( inNameLen == 0 ? NULL : *bp, 
+ /* endpoint->setLogNames( inNameLen == 0 ? NULL : *bp,
 			 outNameLen == 0 ? NULL : *bp + inNameLen + 1);
   if( inNameLen > 0 )
 	  retval = endpoint->d_inLog->open();
@@ -4597,7 +4593,7 @@ int vrpn_Connection::time_since_connection_open
 
 // returns the current time in the connection since the epoch (UTC time).
 // virtual
-timeval vrpn_Connection::get_time( ) 
+timeval vrpn_Connection::get_time( )
 {
 	struct timeval now;
 	vrpn_gettimeofday(&now, NULL);
@@ -4831,7 +4827,7 @@ vrpn_Connection::vrpn_Connection
   endpoint = d_endpoints[0];  // shorthand
 
   // Store the remote log file name and the remote log mode
-  endpoint->d_remoteLogMode = 
+  endpoint->d_remoteLogMode =
          (( (remote_in_logfile_name && strlen(remote_in_logfile_name) > 0) ? vrpn_LOG_INCOMING : vrpn_LOG_NONE) |
           ( (remote_out_logfile_name && strlen(remote_out_logfile_name) > 0) ? vrpn_LOG_OUTGOING : vrpn_LOG_NONE));
   if (!remote_in_logfile_name) {
@@ -4842,7 +4838,7 @@ vrpn_Connection::vrpn_Connection
     	new char [strlen(remote_in_logfile_name) + 1];
     strcpy(endpoint->d_remoteInLogName, remote_in_logfile_name);
   }
-   
+
   if (!remote_out_logfile_name) {
     endpoint->d_remoteOutLogName = new char [10];
     strcpy(endpoint->d_remoteOutLogName, "");
@@ -4851,7 +4847,7 @@ vrpn_Connection::vrpn_Connection
     	new char [strlen(remote_out_logfile_name) + 1];
     strcpy(endpoint->d_remoteOutLogName, remote_out_logfile_name);
   }
-   
+
   // If we are doing local logging, turn it on here. If we
   // can't open the file, then the connection is broken.
 
@@ -5114,7 +5110,7 @@ int vrpn_Connection::message_type_is_registered (const char * name) const
 vrpn_bool vrpn_Connection::doing_okay (void) const {
 
     int endpointIndex;
-    
+
     for (endpointIndex = 0; endpointIndex < d_numEndpoints; endpointIndex++) {
         if (d_endpoints[endpointIndex] &&
             (!d_endpoints[endpointIndex]->doing_okay())) {
@@ -5128,7 +5124,7 @@ vrpn_bool vrpn_Connection::doing_okay (void) const {
 vrpn_bool vrpn_Connection::connected (void) const
 {
     int endpointIndex;
-    
+
     for (endpointIndex = 0; endpointIndex < d_numEndpoints; endpointIndex++) {
         if (d_endpoints[endpointIndex] &&
             (d_endpoints[endpointIndex]->status == CONNECTED)) {
@@ -5203,7 +5199,7 @@ vrpn_Connection * vrpn_get_connection_by_name (
 		int is_file = !strncmp(cname, "file:", 5);
 
 		if (is_file) {
-		//	c = new vrpn_File_Connection (cname, 
+		//	c = new vrpn_File_Connection (cname,
 		//	                              local_in_logfile_name,
 		//	                              local_out_logfile_name);
 		} else {
@@ -5335,7 +5331,7 @@ int vrpn_Connection_IP::connect_to_client (const char *machine, int port)
 	  return -1;
 	}
 
-	d_endpoints[which_end] 
+	d_endpoints[which_end]
 		= (*d_endpointAllocator)(this, &d_numConnectedEndpoints);
 	d_endpoints[which_end]->setConnection( this );
 	d_updateEndpoint = vrpn_TRUE;
@@ -5576,11 +5572,11 @@ void vrpn_Connection_IP::server_check_for_incoming_connections
       sscanf(msg, "%*s %d", &port);   // get the port
       //fill in NIC address
       unsigned long addr_num = ntohl(from.sin_addr.s_addr);
-      sprintf(msg, "%lu.%lu.%lu.%lu %d", 
+      sprintf(msg, "%lu.%lu.%lu.%lu %d",
               (addr_num) >> 24,
               (addr_num >> 16) & 0xff,
               (addr_num >> 8) & 0xff,
-              addr_num & 0xff, port); 
+              addr_num & 0xff, port);
       endpoint->remote_machine_name = msg;
       endpoint->connect_tcp_to(msg);
       handle_connection(which_end);
@@ -5614,7 +5610,7 @@ void vrpn_Connection_IP::server_check_for_incoming_connections
         return;
     }
 
-    d_endpoints[which_end] 
+    d_endpoints[which_end]
 		= (*d_endpointAllocator)(this, &d_numConnectedEndpoints);
 	d_endpoints[which_end]->setConnection( this );
     d_updateEndpoint = vrpn_TRUE;
@@ -5697,7 +5693,7 @@ int vrpn_Connection_IP::mainloop (const struct timeval * pTimeout) {
 #ifdef	VERBOSE2
   //printf("vrpn_Connection_IP::mainloop() called (status %d)\n",connectionStatus);
 #endif
-  
+
   if (d_updateEndpoint) {
     updateEndpoints();
     d_updateEndpoint = vrpn_FALSE;
@@ -5805,7 +5801,7 @@ vrpn_Connection_IP::vrpn_Connection_IP
   }
 
   flush_udp_socket(listen_udp_sock);
-  
+
   vrpn_ConnectionManager::instance().addConnection(this, NULL);
 }
 
@@ -5908,7 +5904,7 @@ vrpn_Connection_IP::vrpn_Connection_IP
     // Let's do both, because otherwise connectionStatus is
     // never initialized, and doing_ok() returns FALSE sometimes.
     connectionStatus = TRYING_TO_CONNECT;  // XXX jeff's addition
-   
+
     // here is the line that Tom added
     endpoint->status = TRYING_TO_CONNECT;
 
@@ -6004,7 +6000,7 @@ vrpn_Connection_IP::vrpn_Connection_IP
     // replace all argument separators (',') with spaces (' ')
     while ( (token = strchr(token, ',')) != NULL) { *token = ' '; }
 
-    endpoint->d_tcpSocket = vrpn_start_server(machinename, server_program, 
+    endpoint->d_tcpSocket = vrpn_start_server(machinename, server_program,
   						     server_args,
                                                  NIC_IPaddress);
     if (machinename) delete [] (char *) machinename;
@@ -6134,7 +6130,7 @@ char * vrpn_copy_file_name (const char * filespecifier)
 
   len = 1 + strlen(fp);
   filename = new char [len];
-  if (!filename) 
+  if (!filename)
     fprintf(stderr, "vrpn_copy_file_name:  Out of memory!\n");
   else {
     strncpy(filename, fp, len - 1);
@@ -6149,7 +6145,7 @@ char * vrpn_copy_file_name (const char * filespecifier)
 static int header_len(const char *hostspecifier) {
   // If the name begins with "x-vrpn://" or "x-vrsh://" or "tcp://" skip that
   // (also handle the case where there is no // after the colon).
-  if (!strncmp(hostspecifier, "x-vrpn://", 9) || 
+  if (!strncmp(hostspecifier, "x-vrpn://", 9) ||
       !strncmp(hostspecifier, "x-vrsh://", 9)) {
 	  return 9;
   } else if (!strncmp(hostspecifier, "x-vrpn:", 7) ||
